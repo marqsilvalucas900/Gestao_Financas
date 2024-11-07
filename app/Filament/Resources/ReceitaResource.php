@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Filament\Resources;
+
 use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\ReceitaResource\Pages;
 use App\Filament\Resources\ReceitaResource\RelationManagers;
@@ -21,9 +22,9 @@ class ReceitaResource extends Resource
 
     protected static ?string $navigationLabel = 'Receitas';
 
-    protected static ?string $modelLabel = 'Receitas Cadastradas';
+    protected static ?string $modelLabel = 'Cadastrar Receitas';
 
-    
+
 
 
     public static function form(Form $form): Form
@@ -37,8 +38,6 @@ class ReceitaResource extends Resource
                     ->prefix('R$')
                     ->default('0.00')
                     ->numeric(),
-                Forms\Components\DatePicker::make('data_recebimento')
-                    ->required(),
                 Forms\Components\TextInput::make('metodo_pagamento')
                     ->required(),
                 Forms\Components\TextInput::make('fatura_numero'),
@@ -67,7 +66,10 @@ class ReceitaResource extends Resource
                         'pendente' => 'pendente',
                         'atrasado' => 'atrasado',
                     ])->required(),
-            ]);
+                Forms\Components\DatePicker::make('data_recebimento')
+                    ->required()
+                    ->columnSpanFull(),
+            ])->columns(3);
     }
 
     public static function table(Table $table): Table

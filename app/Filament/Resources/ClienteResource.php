@@ -22,12 +22,17 @@ class ClienteResource extends Resource
     public static function form(Form $form): Form
     {
         return $form
+
             ->schema([
-                Forms\Components\TextInput::make('nome')
+                Forms\Components\Section::make('User Name')
+                ->description('Nome e email.')
+                ->schema([
+                    Forms\Components\TextInput::make('nome')
                     ->required(),
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required(),
+                ])->columns(2),
                 Forms\Components\TextInput::make('telefone')
                     ->tel(),
             ]);

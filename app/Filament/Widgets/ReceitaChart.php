@@ -11,7 +11,10 @@ use Flowframe\Trend\TrendValue;
 class ReceitaChart extends ChartWidget
 {
     protected static ?string $heading = 'Receita';
-
+    protected int | string | array $columnSpan = [
+        'md' => 2,
+        'xl' => 3,
+    ];
     protected function getData(): array
     {
         $data = Trend::model(Receita::class)
