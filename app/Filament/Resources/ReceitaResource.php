@@ -6,10 +6,14 @@ use Filament\Forms\Components\TextInput;
 use App\Filament\Resources\ReceitaResource\Pages;
 use App\Filament\Resources\ReceitaResource\RelationManagers;
 use App\Models\Receita;
+use Filament\Tables\Actions\CreateAction;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\Summarizers\Average;
+use Filament\Tables\Columns\Summarizers\Sum;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -22,7 +26,12 @@ class ReceitaResource extends Resource
 
     protected static ?string $navigationLabel = 'Receitas';
 
-    protected static ?string $modelLabel = 'Cadastrar Receitas';
+    // protected static ?string $modelLabel = 'Cadastrar Receitas';
+
+    protected static ?string $createButtonLabel = 'Adicionar Nova Receita';
+
+    
+
 
 
 
@@ -31,6 +40,7 @@ class ReceitaResource extends Resource
     {
         return $form
             ->schema([
+                
                 Forms\Components\TextInput::make('descricao')
                     ->required(),
                 Forms\Components\TextInput::make('valor')
@@ -75,6 +85,7 @@ class ReceitaResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated(false)
             ->columns([
                 Tables\Columns\TextColumn::make('descricao')
                     ->searchable(),
@@ -101,6 +112,8 @@ class ReceitaResource extends Resource
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
+                TextColumn::make('valor')
+                    ->summarize(Sum::make()->label('Total'))
             ])
             ->filters([
                 //
