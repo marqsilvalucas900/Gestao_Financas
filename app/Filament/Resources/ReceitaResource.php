@@ -54,6 +54,7 @@ class ReceitaResource extends Resource
 
                 Forms\Components\Select::make('cliente_id')
                     ->relationship('cliente', 'id')
+                    ->preload()
                     ->required()->createOptionForm([
                         Forms\Components\TextInput::make('nome')
                             ->required()
